@@ -1,0 +1,5 @@
+<% unless @objects.nil? %>
+<% @objects.each do |name, value| %>
+<%= ("%-20s" % name.sub( " ", "_" ).gsub(/[^0-9a-z\-_]/i, '')) %> <%= value %>
+<% end %>
+<% end %>
