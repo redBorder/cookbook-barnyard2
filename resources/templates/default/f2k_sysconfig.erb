@@ -1,0 +1,24 @@
+--num-threads=<%= @cores %>
+<% if @enrichment_enabled %>
+--separate-long-flows
+--as-list=/usr/share/GeoIP/GeoIPASNum.dat
+--country-list=/usr/share/GeoIP/GeoLiteCountry.dat
+--mac-vendor-list=/var/lib/barnyard2/mac_vendors
+<% end %>
+--kafka=kafka.service:9092@rb_flow
+--template-cache=<%= @cache_dir %>/templates
+--rb-config=<%= @config_file %>
+--zk-host=zookeeper.service:2181
+--zk-timeout=30
+--dns-cache-size-mb=<%= @dns_cache_size_mb %>
+--dns-cache-timeout-s=14400
+--unprivileged-user=<%= @user %>
+--collector-port=2055
+--normalize-directions=
+--enable-ptr-dns=
+-X=socket.max.fails=3
+-X=socket.keepalive.enable=true
+-X=queue.buffering.max.messages=<%= @buffering_max_messages %>
+-X=queue.buffering.max.ms=1000
+-X=message.send.max.retries=0
+-X=retry.backoff.ms=100
