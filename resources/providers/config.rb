@@ -14,10 +14,10 @@ action :add do #Usually used to install and configure something
     user = new_resource.user
     sensor_id = new_resource.sensor_id
 
-    #yum_package "barnyard2" do
-    #  action :upgrade
-    #  flush_cache [:before]
-    #end 
+    yum_package "barnyard2" do
+      action :upgrade
+      flush_cache [:before]
+    end 
 
     groups = node["redborder"]["snort"]["groups"].keys.map{|x| x.to_i}
     used_segments = []
@@ -121,7 +121,7 @@ action :add do #Usually used to install and configure something
           objects=ob_db["list"]
       end
     
-      template "/opt/rb/etc/objects/#{ob}" do
+      template "/etc/objects/#{ob}" do
         source "objects.erb"
         cookbook "barnyard2"
         owner "root"

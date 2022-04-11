@@ -14,3 +14,5 @@ attribute :templates_dir, :kind_of => String, :default => "/var/cache/barnyard2/
 attribute :config_dir, :kind_of => String, :default => "/etc/barnyard2"
 attribute :user, :kind_of => String, :default => "barnyard2"
 attribute :sensors, :kind_of => Hash, :default => []
+
+attribute :sensor_id, :kind_of => Integer, :default => 0 
