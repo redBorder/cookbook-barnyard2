@@ -13,7 +13,13 @@ action :add do #Usually used to install and configure something
     templates_dir = new_resource.templates_dir
     user = new_resource.user
     groups = new_resource.groups
-    
+    sensor_id = new_resource.sensor_id
+
+    yum_package "barnyard2" do
+      action :upgrade
+      flush_cache [:before]
+    end 
+
     groups.each do |group|
  
       [ "barnyard2" ].each do |s|
@@ -96,7 +102,7 @@ action :add do #Usually used to install and configure something
           objects=ob_db["list"]
       end
     
-      template "/opt/rb/etc/objects/#{ob}" do
+      template "/etc/objects/#{ob}" do
         source "objects.erb"
         cookbook "barnyard2"
         owner "root"
