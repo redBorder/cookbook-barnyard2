@@ -21,7 +21,8 @@ action :add do #Usually used to install and configure something
     end 
 
     groups.each do |group|
- 
+      name = group["name"]
+      
       [ "barnyard2" ].each do |s|
         [ "reload", "restart", "stop", "start" ].each do |s_action|
           execute "#{s_action}_#{s}_#{group["instances_group"]}_#{name}" do
