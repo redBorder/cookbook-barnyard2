@@ -5,13 +5,7 @@
 
 action :add do #Usually used to install and configure something
   begin
-    cores = new_resource.cores
-    memory_kb = new_resource.memory_kb
-    enrichment_enabled = new_resource.enrichment_enabled
-    cache_dir = new_resource.cache_dir
-    config_dir = new_resource.config_dir
-    templates_dir = new_resource.templates_dir
-    user = new_resource.user
+
     groups = new_resource.groups
     sensor_id = new_resource.sensor_id
 
@@ -22,7 +16,7 @@ action :add do #Usually used to install and configure something
 
     groups.each do |group|
       name = group["name"]
-      
+
       [ "barnyard2" ].each do |s|
         [ "reload", "restart", "stop", "start" ].each do |s_action|
           execute "#{s_action}_#{s}_#{group["instances_group"]}_#{name}" do
