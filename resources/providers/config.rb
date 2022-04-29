@@ -5,13 +5,8 @@
 
 action :add do #Usually used to install and configure something
   begin
-    cores = new_resource.cores
-    memory_kb = new_resource.memory_kb
-    enrichment_enabled = new_resource.enrichment_enabled
-    cache_dir = new_resource.cache_dir
-    config_dir = new_resource.config_dir
-    templates_dir = new_resource.templates_dir
-    user = new_resource.user
+
+    groups = new_resource.groups
     sensor_id = new_resource.sensor_id
 
     yum_package "barnyard2" do
@@ -19,59 +14,40 @@ action :add do #Usually used to install and configure something
       flush_cache [:before]
     end 
 
-    groups = node["redborder"]["snort"]["groups"].keys.map{|x| x.to_i}
-    used_segments = []
+    groups.each do |group|
+      name = group["name"]
 
-    node["redborder"]["snort"]["groups"].each do |id, original_group|
-      group = node["redborder"]["snort"]["groups"][id].to_hash.clone
-      bindings = group["bindings"].keys.map{|x| x.to_i}.flatten
-      name = (group["name"].nil? ? "default" : group["name"].to_s)
-      group["name"]     = name 
-      group["segments"] = node["redborder"]["segments"].keys  if group["segments"].nil?
-      group["cpu_list"] = 0.upto(node["cpu"]["total"]-1).to_a if group["cpu_list"].nil?
-      group["cpu_list"] = (group["cpu_list"].map { |x| x.to_i }).sort.uniq
-      group["segments"] = group["segments"].sort.uniq
-      group["instances_group"] = id.to_i
-      group["segments"] = group["segments"].select{ |x| !used_segments.include?(x) }
-  
-      if group["cpu_list"].size==0 or group["segments"].size==0 or group["bindings"].nil? or group["bindings"].size==0
-        groups.delete(id.to_i)
-      else
-        used_segments = used_segments + group["segments"]
-        
-    
-        [ "barnyard2" ].each do |s|
-          [ "reload", "restart", "stop", "start" ].each do |s_action|
-            execute "#{s_action}_#{s}_#{group["instances_group"]}_#{name}" do
-              command "/bin/env WAIT=1 /etc/init.d/#{s} #{s_action} #{name}" 
-              ignore_failure true
-              action :nothing
-            end
+      [ "barnyard2" ].each do |s|
+        [ "reload", "restart", "stop", "start" ].each do |s_action|
+          execute "#{s_action}_#{s}_#{group["instances_group"]}_#{name}" do
+            command "/bin/env WAIT=1 /etc/init.d/#{s} #{s_action} #{name}" 
+            ignore_failure true
+            action :nothing
           end
         end
-  
-        template "/etc/snort/#{group["instances_group"]}/barnyard2.conf" do
-          source "barnyard2.conf.erb"
-          cookbook "barnyard2"
-          owner "root"
-          group "root"
-          mode 0644
-          retries 2
-          variables(:sensor_id => sensor_id, :name => name, :group => group)
-          notifies :run, "execute[restart_barnyard2_#{group["instances_group"]}_#{name}]", :delayed
-        end
-  
-       
-        template "/etc/sysconfig/barnyard2-#{group["instances_group"]}" do
-          source "barnyard2.erb"
-          cookbook "barnyard2"
-          owner "root"
-          group "root"
-          mode 0644
-          retries 2
-          variables(:sensor_id => sensor_id, :name => name, :group => group)
-          notifies :run, "execute[restart_barnyard2_#{group["instances_group"]}_#{name}]", :delayed
-        end
+      end
+
+      template "/etc/snort/#{group["instances_group"]}/barnyard2.conf" do
+        source "barnyard2.conf.erb"
+        cookbook "barnyard2"
+        owner "root"
+        group "root"
+        mode 0644
+        retries 2
+        variables(:sensor_id => sensor_id, :name => name, :group => group)
+        notifies :run, "execute[restart_barnyard2_#{group["instances_group"]}_#{name}]", :delayed
+      end
+
+      
+      template "/etc/sysconfig/barnyard2-#{group["instances_group"]}" do
+        source "barnyard2.erb"
+        cookbook "barnyard2"
+        owner "root"
+        group "root"
+        mode 0644
+        retries 2
+        variables(:sensor_id => sensor_id, :name => name, :group => group)
+        notifies :run, "execute[restart_barnyard2_#{group["instances_group"]}_#{name}]", :delayed
       end
     end
 
