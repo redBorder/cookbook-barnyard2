@@ -111,10 +111,12 @@ action :add do #Usually used to install and configure something
 
 
     service "barnyard2" do
-      #service_name node[:redBorder][:barnyard2][:service]
+      provider Chef::Provider::Service::Init
+      service_name node[:redborder][:barnyard2][:service]
       ignore_failure true
       supports :status => true, :reload => true, :restart => true
-      action([:start, :enable])
+      #action([:start, :enable])
+      action([:start])
     end
 
 
@@ -127,8 +129,11 @@ end
 action :remove do #Usually used to uninstall something
   begin
     service "barnyard2" do
-      supports :stop => true, :disable => true
-      action [:stop, :disable]
+      provider Chef::Provider::Service::Init
+      service_name node[:redborder][:barnyard2][:service]
+      supports :stop => true
+      #action [:stop, :disable]
+      action [:stop]
     end
 
     Chef::Log.info("barnyard2 cookbook has been processed")
