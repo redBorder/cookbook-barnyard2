@@ -111,7 +111,8 @@ action :add do #Usually used to install and configure something
 
 
     service "barnyard2" do
-      provider Chef::Provider::Service::Init
+      #provider Chef::Provider::Service::Init
+      provider Chef::Provider::Service::Systemd
       service_name node[:redborder][:barnyard2][:service]
       ignore_failure true
       supports :status => true, :reload => true, :restart => true
@@ -129,7 +130,8 @@ end
 action :remove do #Usually used to uninstall something
   begin
     service "barnyard2" do
-      provider Chef::Provider::Service::Init
+      #provider Chef::Provider::Service::Init
+      provider Chef::Provider::Service::Systemd
       service_name node[:redborder][:barnyard2][:service]
       supports :stop => true
       #action [:stop, :disable]
