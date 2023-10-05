@@ -9,7 +9,7 @@ action :add do #Usually used to install and configure something
     groups = new_resource.groups
     sensor_id = new_resource.sensor_id
 
-    yum_package "barnyard2" do
+    dnf_package "barnyard2" do
       action :upgrade
       flush_cache [:before]
     end 
