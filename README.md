@@ -4,7 +4,7 @@ cookbook to install and configure barnyard2 service in redborder environments
 
 ### Platforms
 
-- Centos 7
+- Rocky Linux 9
 
 ### Chef
 
