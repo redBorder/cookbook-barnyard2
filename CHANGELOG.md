@@ -3,6 +3,11 @@ cookbook-example CHANGELOG
 
 This file is used to list changes made in each version of the example cookbook.
 
+0.0.6
+-----
+- [David Vanhoucke <dvanhoucke@redborder.com]
+  - Changed http to deflated mode
+
 0.0.1
 -----
 - [Alberto Rodríguez <arodriguez@redborder.com]
