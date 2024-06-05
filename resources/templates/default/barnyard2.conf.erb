@@ -32,7 +32,12 @@ input unified2
 # Kafka
 <% if !@sensor_id.nil? and @sensor_id>0 and !node["redborder"]["sensor_uuid"].nil? %>
 <% out = [ "deployment", "deployment_uuid", "namespace", "namespace_uuid", "market", "market_uuid", "organization", "organization_uuid", "service_provider", "service_provider_uuid" ].map { |x| (@group[x].nil? ? "" : "\"#{x}\":\"#{@group[x].to_s.gsub(" ","\\ ")}\"")}.select{|x| x!="" }.join(",") %>
-output alert_json: <%= (!node["redborder"]["cloud"].nil? and (node["redborder"]["cloud"]==1 or node["redborder"]["cloud"]=="1" or node["redborder"]["cloud"]==true or node["redborder"]["cloud"]=="true")) ? "https://http2k.service/rbdata/#{node["redborder"]["sensor_uuid"]}/rb_event http.max_connections=5 http.max_queued_messages=10000 http.conn_timeout=10000 http.req_timeout=30000 http.insecure=1 http.mode=0" : "kafka://kafka.#{ node["redborder"]["cdomain"] }@rb_event rdkafka.socket.max.fails=1" %> default enrich_with={<%= (out == "" or out.nil? ) ? "" : "#{out}," %>"sensor_uuid":"<%= node["redborder"]["sensor_uuid"].to_s.gsub(" ", "\\ ") %>","sensor_name":"<%= node[:hostname].gsub(" ", "\\ ") %>","group_uuid":"<%= (@group["group_uuid"].nil? ? "0" : @group["group_uuid"].to_s.gsub(' ','') ) %>","group_name":"<%= @name.nil? ? "default" : @name.to_s.gsub(" ","\\ ").to_s.gsub(',','') %>","sensor_type":"ips","domain_name":"<%= (@group["domain_name"].nil? ? "0" : @group["domain_name"].to_s.gsub(" ","\\ ") ) %>","sensor_ip":"<%= node["ipaddress"] %>"} hosts=/etc/objects/hosts networks=/etc/objects/networks services=/etc/objects/services protocols=/etc/objects/protocols vlans=/etc/objects/vlans<%= ((File.exists?"/share/GeoIP/country.dat") ? " geoip=/share/GeoIP/country.dat " : "") %><%= ((File.exists?"/share/GeoIP/countryv6.dat") ? " geoip6=/share/GeoIP/countryv6.dat" : "") %><%= ((File.exists?"/share/GeoIP/asnv6.dat") ? " geoip6_org=/share/GeoIP/asnv6.dat" : "") %><%= ((File.exists?"/share/GeoIP/asn.dat") ? " geoip_org=/share/GeoIP/asn.dat" : "") %><%= ((File.exists?"/etc/objects/mac_vendors") ? " eth_vendors=/etc/objects/mac_vendors" : "") %>
+<% QUERY = if node["redborder"]["cloud"].nil? or node["redborder"]["cloud"]==1 or node["redborder"]["cloud"]=="1" or node["redborder"]["cloud"]==true or node["redborder"]["cloud"]=="true" %>
+<% "kafka://kafka.#{ node["redborder"]["cdomain"] }@rb_event rdkafka.socket.max.fails=1" %>
+<% else %>
+<% "https://http2k.service/rbdata/#{node["redborder"]["sensor_uuid"]}/rb_event http.max_connections=5 http.max_queued_messages=10000 http.conn_timeout=10000 http.req_timeout=30000 http.insecure=1 http.mode=0" %>
+<% end %>
+output alert_json: <%= QUERY %> default enrich_with={<%= (out == "" or out.nil? ) ? "" : "#{out}," %>"sensor_uuid":"<%= node["redborder"]["sensor_uuid"].to_s.gsub(" ", "\\ ") %>","sensor_name":"<%= node[:hostname].gsub(" ", "\\ ") %>","group_uuid":"<%= (@group["group_uuid"].nil? ? "0" : @group["group_uuid"].to_s.gsub(' ','') ) %>","group_name":"<%= @name.nil? ? "default" : @name.to_s.gsub(" ","\\ ").to_s.gsub(',','') %>","sensor_type":"ips","domain_name":"<%= (@group["domain_name"].nil? ? "0" : @group["domain_name"].to_s.gsub(" ","\\ ") ) %>","sensor_ip":"<%= node["ipaddress"] %>"} hosts=/etc/objects/hosts networks=/etc/objects/networks services=/etc/objects/services protocols=/etc/objects/protocols vlans=/etc/objects/vlans<%= ((File.exists?"/share/GeoIP/country.dat") ? " geoip=/share/GeoIP/country.dat " : "") %><%= ((File.exists?"/share/GeoIP/countryv6.dat") ? " geoip6=/share/GeoIP/countryv6.dat" : "") %><%= ((File.exists?"/share/GeoIP/asnv6.dat") ? " geoip6_org=/share/GeoIP/asnv6.dat" : "") %><%= ((File.exists?"/share/GeoIP/asn.dat") ? " geoip_org=/share/GeoIP/asn.dat" : "") %><%= ((File.exists?"/etc/objects/mac_vendors") ? " eth_vendors=/etc/objects/mac_vendors" : "") %>
 <% end %>
 
 # Syslog
@@ -42,6 +47,4 @@ output alert_syslog: LOG_DAEMON
 <% else %>
 output alert_syslog_full: sensor_name <%= node[:hostname] %>, sensor_group <%= @name.nil? ? "default" : @name.to_s.gsub(' ','').to_s.gsub(',','') %>, local
 <% end %>
-
 <% end %>
-
