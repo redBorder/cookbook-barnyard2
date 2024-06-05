@@ -1,5 +1,12 @@
-cookbook-example CHANGELOG
-==========================
+cookbook-barnyard2 CHANGELOG
+===============
+
+## 0.0.7
+
+  - Miguel Negron
+    - [2168330] Change cookbook owner
+  - David Vanhoucke
+    - [fa72c83] set correct http mode
 
 This file is used to list changes made in each version of the example cookbook.
 
