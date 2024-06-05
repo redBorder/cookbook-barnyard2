@@ -1,5 +1,18 @@
-cookbook-example CHANGELOG
-==========================
+cookbook-barnyard2 CHANGELOG
+===============
+
+## 0.0.7
+
+  - Miguel Negron
+    - [4fe029c] lint resources
+    - [36e5a94] lint recipes
+    - [c2f0348] lint providers
+    - [5484b11] lint attributes
+    - [03f9b0f] Update README.md
+    - [310a1b8] Update rpm.yml
+    - [2168330] Update metadata.rb
+  - David Vanhoucke
+    - [fa72c83] set correct http mode
 
 This file is used to list changes made in each version of the example cookbook.
 
