@@ -1,6 +1,14 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.0
+
+  - Luis Blanco
+    - [83df88c] Merge pull request #11 from redBorder/feature/17731_ips_ssh_version
+    - [c4a49dc] Merge branch 'master' into feature/17731_ips_ssh_version
+  - Miguel Alvarez
+    - [cae53ad] Fix sensor name enrichment for ips ssh
+
 ## 0.0.7
 
   - Miguel Negron
