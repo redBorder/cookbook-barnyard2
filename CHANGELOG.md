@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.0
+
+  - Miguel Alvarez
+    - [cae53ad] Fix sensor name enrichment for ips ssh
+
 ## 0.0.7
 
   - Miguel Negron
