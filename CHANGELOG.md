@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.1
+
+  - Miguel Negrón
+    - [c655453] Add pre and postun to clean the cookbook
+
 ## 0.1.0
 
   - Miguel Alvarez
@@ -8,7 +13,7 @@ cookbook-barnyard2 CHANGELOG
 
 ## 0.0.7
 
-  - Miguel Negron
+  - Miguel Negrón
     - [2168330] Change cookbook owner
   - David Vanhoucke
     - [fa72c83] set correct http mode
