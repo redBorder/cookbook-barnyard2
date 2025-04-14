@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.2
+
+  - nilsver
+    - [f81ee71] change http2k service to http2k cdomain
+
 ## 0.1.1
 
   - Miguel Negrón
