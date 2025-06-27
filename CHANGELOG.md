@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.3
+
+  - nilsver
+    - [53ab6d5] remove flush cache
+
 ## 0.1.2
 
   - nilsver
