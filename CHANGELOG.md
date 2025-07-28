@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.4
+
+  - jnavarrorb
+    - [0eff54f] Remove executable permissions on non-executable files
+
 ## 0.1.3
 
   - nilsver
