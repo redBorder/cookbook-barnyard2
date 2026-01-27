@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.5
+
+  - manegron
+    - [ecf014d] Fix load permissions
+
 ## 0.1.4
 
   - jnavarrorb
