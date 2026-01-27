@@ -49,8 +49,12 @@ action :add do
     known_ips = {}
     node_keys = Chef::Node.list.keys.sort
     node_keys.each do |n_key|
-      n = Chef::Node.load n_key
-      known_ips[n['rbname']] = n['ipaddress'] if n['ipaddress'] && n['rbname']
+      begin
+        n = Chef::Node.load n_key
+        known_ips[n['rbname']] = n['ipaddress'] if n['ipaddress'] && n['rbname']
+      rescue
+        Chef::Log.info('No permissions to read this node')
+      end
     end
 
     directory '/etc/objects' do
