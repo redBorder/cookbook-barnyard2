@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.6
+
+  - manegron
+    - [e4407fc] Change rescue behaviour
+
 ## 0.1.5
 
   - manegron
