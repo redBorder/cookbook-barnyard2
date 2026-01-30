@@ -53,7 +53,7 @@ action :add do
       begin
         n = Chef::Node.load n_key
       rescue
-        Chef::Log.error("[config] Failed to load node: #{n_key}")
+        Chef::Log.warn("[config] Cannot load node: #{n_key}")
       end
       next unless n
 
