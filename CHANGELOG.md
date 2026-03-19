@@ -1,6 +1,13 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.7
+
+  - David
+    - [79c8e55] Merge pull request #22 from redBorder/bugfix/#24045_barnyard_fails_in_case_the_sensor_name_contains_a_space
+  - Rafael Gomez
+    - [3e09021] Sanitize sensor name
+
 ## 0.1.6
 
   - manegron
