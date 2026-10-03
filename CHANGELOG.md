@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.1.8
+
+  - manegron
+    - [9153963] Upload cookbook only if opscode-erchef is active
+
 ## 0.1.7
 
   - David
