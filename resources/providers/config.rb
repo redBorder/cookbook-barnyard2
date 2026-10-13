@@ -46,17 +46,10 @@ action :add do
       end
     end
 
+    # Only the needed attributes of each node are requested to the chef server
     known_ips = {}
-    node_keys = Chef::Node.list.keys.sort
-    node_keys.each do |n_key|
-      n = nil
-      begin
-        n = Chef::Node.load n_key
-      rescue
-        Chef::Log.warn("[config] Cannot load node: #{n_key}")
-      end
-      next unless n
-
+    query_filter = { 'name' => ['name'], 'rbname' => ['rbname'], 'ipaddress' => ['ipaddress'] }
+    search(:node, '*:*', filter_result: query_filter).sort_by { |n| n['name'].to_s }.each do |n|
       known_ips[n['rbname']] = n['ipaddress'] if n['ipaddress'] && n['rbname']
     end
 
