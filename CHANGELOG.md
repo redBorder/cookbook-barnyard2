@@ -1,6 +1,14 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 0.2.0
+
+  - Miguel Negrón
+    - [0a429d9] Merge pull request #24 from redBorder/improvement/#26867_reduce_chef_server_queries
+  - manegron
+    - [0a429d9] Merge pull request #24 from redBorder/improvement/#26867_reduce_chef_server_queries
+    - [6c0b4f9] Reduce chef server queries
+
 ## 0.1.8
 
   - manegron
