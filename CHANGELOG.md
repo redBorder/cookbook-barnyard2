@@ -1,6 +1,11 @@
 cookbook-barnyard2 CHANGELOG
 ===============
 
+## 1.0.0
+
+  - manegron
+    - [07dd51a] Fix File.exists? by File.exist?
+
 ## 0.2.0
 
   - Miguel Negrón
